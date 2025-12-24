@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="site-title">شابي ستور | SHABBY STORE</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&family=Inter:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <style>
+      /* --- Fonts --- */
+      @font-face {
+        font-family: "KO Ghorab";
+        src: url("https://fonts.cdnfonts.com/s/91280/KO-Ghorab.woff")
+          format("woff");
+      }
+      @font-face {
+        font-family: "29LT Bukra Wide";
+        src: url("https://db.onlinewebfonts.com/t/01f5582f6e52c8035b5a7a72382e70e9.woff2")
+          format("woff2");
+      }
+
+      :root {
+        --font-ar: "KO Ghorab", "Cairo", sans-serif;
+        --font-en: "29LT Bukra Wide", "Inter", sans-serif;
+        --brand-red: #e11d48;
+        --brand-beige: #d6c9b1;
+      }
+
+      /* --- Global Styles --- */
+      [dir="rtl"] body {
+        font-family: var(--font-ar);
+      }
+      [dir="ltr"] body {
+        font-family: var(--font-en);
+      }
+
+      body {
+        background-color: #050505;
+        color: #f3f4f6;
+        overflow-x: hidden;
+        background-image: radial-gradient(
+            circle at 5% 10%,
+            rgba(225, 29, 72, 0.2) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 95% 90%,
+            rgba(214, 201, 177, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 50% 50%,
+            rgba(225, 29, 72, 0.1) 0%,
+            transparent 80%
+          );
+        background-attachment: fixed;
+      }
+
+      /* --- Animations --- */
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+      @keyframes glow {
+        0% {
+          box-shadow: 0 0 5px rgba(225, 29, 72, 0.2);
+        }
+        50% {
+          box-shadow: 0 0 20px rgba(225, 29, 72, 0.6);
+        }
+        100% {
+          box-shadow: 0 0 5px rgba(225, 29, 72, 0.2);
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .glass-nav {
+        background: rgba(5, 5, 5, 0.85);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      /* --- Buttons --- */
+      .btn-primary {
+        background-color: var(--brand-beige);
+        color: var(--brand-red) !important;
+        font-weight: 900;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-primary::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        transition: 0.5s;
+      }
+      .btn-primary:hover::after {
+        left: 100%;
+      }
+      .btn-primary:hover {
+        background-color: var(--brand-red);
+        color: white !important;
+        box-shadow: 0 0 30px rgba(225, 29, 72, 0.5);
+        transform: scale(1.05);
+      }
+
+      .btn-red {
+        background-color: rgba(225, 29, 72, 0.1);
+        color: var(--brand-red) !important;
+        border: 1px solid var(--brand-red);
+        transition: 0.3s;
+      }
+      .btn-red:hover {
+        background-color: var(--brand-red);
+        color: white !important;
+        box-shadow: 0 0 15px var(--brand-red);
+      }
+
+      /* --- Cards --- */
+      .product-card {
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(20, 20, 20, 0.6);
+        backdrop-filter: blur(5px);
+      }
+      .product-card:hover {
+        transform: translateY(-15px) scale(1.02);
+        border-color: var(--brand-red);
+        box-shadow: 0 25px 50px -12px rgba(225, 29, 72, 0.25);
+        z-index: 10;
+      }
+
+      .like-btn {
+        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .like-btn:active {
+        transform: scale(0.8);
+      }
+      .like-btn.liked i {
+        font-weight: 900;
+        color: var(--brand-red);
+        animation: pulseHeart 0.3s forwards;
+      }
+      @keyframes pulseHeart {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.3);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        backdrop-filter: blur(15px);
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .modal.active {
+        display: flex;
+        opacity: 1;
+      }
+
+      /* --- Mega Inputs --- */
+      .mega-input {
+        background: #0a0a0a !important;
+        border: 1px solid #333 !important;
+        padding: 1.2rem !important;
+        font-size: 1.1rem !important;
+        border-radius: 1rem !important;
+        width: 100%;
+        color: white !important;
+        outline: none;
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .mega-input:focus {
+        border-color: var(--brand-red) !important;
+        background: #111 !important;
+        box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.15);
+      }
+
+      .input-wrapper {
+        position: relative;
+        width: 100%;
+      }
+      .eye-toggle {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #555;
+        transition: 0.3s;
+        z-index: 10;
+        font-size: 1.3rem;
+      }
+      [dir="rtl"] .eye-toggle {
+        left: 1.5rem;
+      }
+      [dir="ltr"] .eye-toggle {
+        right: 1.5rem;
+      }
+      .eye-toggle:hover {
+        color: var(--brand-red);
+      }
+
+      #toast {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        z-index: 2000;
+      }
+      #toast.active {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      .cart-drawer {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        max-width: 450px;
+        height: 100%;
+        background: #080808;
+        z-index: 1100;
+        transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        border-left: 1px solid rgba(225, 29, 72, 0.3);
+      }
+      .cart-drawer.active {
+        right: 0;
+        box-shadow: -20px 0 50px rgba(0, 0, 0, 0.8);
+      }
+
+      .glow-text {
+        color: var(--brand-red);
+        text-shadow: 0 0 20px rgba(225, 29, 72, 0.8);
+        animation: glow 3s infinite;
+      }
+
+      .floating-element {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #000;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--brand-red);
+      }
+
+      /* Auth Toggle Switch */
+      .auth-switch-btn.active {
+        color: white;
+      }
+      .auth-switch-btn {
+        color: #666;
+        transition: 0.3s;
+      }
+
+      /* Star Rating Styles */
+      .star-rating {
+        direction: rtl;
+        display: inline-flex;
+      }
+      .star-rating input {
+        display: none;
+      }
+      .star-rating label {
+        font-size: 2rem;
+        color: #333;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+      .star-rating input:checked ~ label,
+      .star-rating label:hover,
+      .star-rating label:hover ~ label {
+        color: var(--brand-red);
+        text-shadow: 0 0 10px rgba(225, 29, 72, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="toast"
+      class="bg-red-600 text-white px-8 py-4 rounded-full font-bold shadow-[0_0_30px_rgba(225,29,72,0.6)] text-sm italic border border-white/20 flex items-center gap-3"
+    >
+      <i class="fa-solid fa-check-circle"></i> <span id="toast-msg"></span>
+    </div>
+
+    <!-- Navbar -->
+    <nav
+      class="fixed top-0 w-full z-[100] glass-nav h-20 transition-all duration-300"
+      id="main-nav"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between"
+      >
+        <div
+          class="flex items-center gap-3 cursor-pointer group"
+          onclick="window.scrollTo({top:0, behavior:'smooth'})"
+        >
+          <div
+            class="w-12 h-12 bg-gradient-to-br from-red-600 to-red-800 rounded-xl flex items-center justify-center font-black text-white italic text-xl group-hover:rotate-12 transition-transform shadow-[0_0_15px_rgba(225,29,72,0.6)] rounded-full logo-bounce"
+          >
+            <img src="img/logo2.png" alt="" />
+          </div>
+          <span
+            class="text-xl font-black italic uppercase text-white tracking-tighter group-hover:tracking-widest transition-all duration-300"
+            >Warshal <span class="text-[#d6c9b1]">STORE</span></span
+          >
+        </div>
+
+        <div class="flex items-center gap-4">
+          <button
+            onclick="window.toggleLanguage()"
+            id="lang-btn"
+            class="w-10 h-10 bg-white/5 rounded-full text-[10px] font-black border border-white/5 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all text-[#d6c9b1]"
+          >
+            EN
+          </button>
+
+          <button
+            onclick="window.toggleCartDrawer()"
+            class="relative w-10 h-10 flex items-center justify-center group hover:scale-110 transition-transform"
+          >
+            <i
+              class="fa-solid fa-bag-shopping text-lg text-white group-hover:text-red-500 transition-colors"
+            ></i>
+            <span
+              id="cart-count"
+              class="absolute -top-1 -right-1 bg-red-600 text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold text-white shadow-lg animate-pulse"
+              >0</span
+            >
+          </button>
+
+          <!-- User Icon (Smart) -->
+          <button
+            onclick="window.handleUserIconClick()"
+            id="user-icon-btn"
+            class="w-10 h-10 flex items-center justify-center text-[#d6c9b1] hover:text-red-500 hover:rotate-6 transition-all bg-white/5 rounded-full border border-white/5 relative"
+          >
+            <i class="fa-solid fa-user text-lg"></i>
+            <span
+              id="user-status-dot"
+              class="hidden absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-black"
+            ></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-48 pb-32 text-center px-6 relative overflow-hidden">
+      <div
+        id="hero-bg"
+        class="absolute inset-0 z-0 transition-all duration-1000 ease-in-out bg-cover bg-center"
+      >
+        <div class="absolute inset-0 bg-black/50"></div>
+      </div>
+
+      <div
+        class="absolute top-20 left-10 w-32 h-32 bg-red-600/10 rounded-full blur-3xl floating-element z-10"
+      ></div>
+      <div
+        class="absolute bottom-20 right-10 w-48 h-48 bg-[#d6c9b1]/10 rounded-full blur-3xl floating-element z-10"
+        style="animation-delay: 1s"
+      ></div>
+
+      <div class="reveal active relative z-10">
+        <h1
+          id="hero-title"
+          class="text-6xl md:text-9xl font-black italic uppercase text-white tracking-tighter leading-none mb-6 drop-shadow-2xl"
+        >
+          WAESHAL <span class="glow-text">POWER</span>
+        </h1>
+        <p
+          id="hero-desc"
+          class="text-gray-300 text-lg max-w-3xl mx-auto mb-12 mt-20 leading-relaxed font-medium"
+        >
+          “Designed for comfort, made for everyday wear. Our hoodies combine
+          premium fabrics with modern designs to keep you warm and stylish all
+          day long.
+        </p>
+        <button
+          id="shop-btn"
+          onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})"
+          class="btn-primary px-16 py-6 rounded-full italic uppercase text-xl z-10 relative"
+        >
+          تسوق الآن
+        </button>
+      </div>
+    </header>
+
+    <!-- Features -->
+    <section
+      class="max-w-3xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 reveal"
+    >
+      <div
+        onclick="window.openFeature('review')"
+        class="bg-gradient-to-b from-white/5 to-transparent p-8 rounded-full text-center border border-white/5 cursor-pointer hover:border-red-600 transition-all group hover:-translate-y-2"
+      >
+        <div
+          class="w-full h-full mx-auto bg-[#996A53] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(225,29,72,0.2)]"
+        >
+          <!-- <i class="fa-solid fa-star text-red-600 text-xl"></i> -->
+          <img class="rounded-full" src="img/اراء عملائنا png.png" alt="" />
+        </div>
+        <h4
+          id="f-reviews-title"
+          class="font-black italic uppercase text-xs text-[#d6c9b1] tracking-wider"
+        >
+          آراء العملاء
+        </h4>
+      </div>
+      <div
+        onclick="window.openFeature('exp')"
+        class="bg-gradient-to-b from-white/5 to-transparent p-8 rounded-full text-center border border-white/5 cursor-pointer hover:border-red-600 transition-all group hover:-translate-y-2"
+      >
+        <div
+          class="w-full h-full mx-auto bg-[#996A53] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(225,29,72,0.2)]"
+        >
+          <!-- <i class="fa-solid fa-bolt text-red-600 text-xl"></i> -->
+          <img src="img/التجربة png.png" alt="" />
+        </div>
+        <h4
+          id="f-exp-title"
+          class="font-black italic uppercase text-xs text-[#d6c9b1] tracking-wider"
+        >
+          التجربة
+        </h4>
+      </div>
+      <div
+        onclick="window.openFeature('fabric')"
+        class="bg-gradient-to-b from-white/5 to-transparent p-8 rounded-full text-center border border-white/5 cursor-pointer hover:border-red-600 transition-all group hover:-translate-y-2"
+      >
+        <div
+          class="w-full h-full mx-auto bg-[#996A53] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(225,29,72,0.2)]"
+        >
+          <!-- <i class="fa-solid fa-shirt text-red-600 text-xl"></i> -->
+          <img src="img/الخامة png.png" alt="" />
+        </div>
+        <h4
+          id="f-fabric-title"
+          class="font-black italic uppercase text-xs text-[#d6c9b1] tracking-wider"
+        >
+          القماش
+        </h4>
+      </div>
+      <div
+        onclick="window.openFeature('about')"
+        class="bg-gradient-to-b from-white/5 to-transparent p-8 rounded-full text-center border border-white/5 cursor-pointer hover:border-red-600 transition-all group hover:-translate-y-2"
+      >
+        <div
+          class="w-full h-full mx-auto bg-[#996A53] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(225,29,72,0.2)]"
+        >
+          <!-- <i class="fa-solid fa-flag text-red-600 text-xl"></i> -->
+          <img src="img/من نحن png.png" alt="" />
+        </div>
+        <h4
+          id="f-about-title"
+          class="font-black italic uppercase text-xs text-[#d6c9b1] tracking-wider"
+        >
+          من نحن
+        </h4>
+      </div>
+    </section>
+
+    <!-- Shop -->
+    <main id="shop" class="max-w-7xl mx-auto px-6 py-20">
+      <div class="flex items-center gap-4 mb-16 reveal">
+        <div class="w-2 h-16 bg-red-600 rounded-full"></div>
+        <h2
+          id="drops-title"
+          class="text-4xl md:text-5xl font-black italic uppercase"
+        >
+          Latest Drops
+        </h2>
+      </div>
+      <div
+        id="products-grid"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+      ></div>
+    </main>
+    <!-- Features Section (السكشن الثاني المطلوب) -->
+    <section class="py-20 relative border-y border-[#cc1b1b]">
+      <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="text-center reveal">
+          <div
+            class="feature-icon w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-shipping-fast text-2xl text-yellow-200"></i>
+          </div>
+          <h4 class="font-bold text-[#f5f5dc]">FAST DELIVARY</h4>
+        </div>
+        <div class="text-center reveal delay-100">
+          <div
+            class="feature-icon w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-shield-alt text-2xl text-yellow-200"></i>
+          </div>
+          <h4 class="font-bold text-[#f5f5dc]">SECURE PAYMENT</h4>
+        </div>
+        <div class="text-center reveal delay-200">
+          <div
+            class="feature-icon w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-undo text-2xl text-yellow-200"></i>
+          </div>
+          <h4 class="font-bold text-[#f5f5dc]">EASE RETEVAL</h4>
+        </div>
+        <div class="text-center reveal delay-300">
+          <div
+            class="feature-icon w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-headset text-2xl text-yellow-200"></i>
+          </div>
+          <h4 class="font-bold text-[#f5f5dc]">ALL DAY SERVICE</h4>
+        </div>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer
+      class="bg-[#080808] border-t border-red-900/20 pt-20 pb-10 px-6 relative overflow-hidden"
+    >
+      <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-50"
+      ></div>
+      <div
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 reveal"
+      >
+        <div>
+          <span
+            class="text-3xl font-black italic uppercase text-white mb-6 block"
+            >WARSHAL <span class="text-[#d6c9b1]">STORE</span></span
+          >
+          <p
+            id="footer-about"
+            class="text-gray-400 text-sm leading-relaxed max-w-xs"
+          >
+            Streetwear designed for power. Egyptian Identity with global styles
+          </p>
+        </div>
+        <div class="flex flex-col md:items-center justify-center">
+          <h5
+            class="font-black italic uppercase text-xs mb-6 text-red-600 tracking-widest"
+          >
+            Connect With Us
+          </h5>
+          <div class="flex gap-6 text-2xl text-gray-500">
+            <a
+              href="https://www.watsapp.com"
+              target="_blank"
+              class="hover:text-[#25D366] hover:-translate-y-1 transition-all duration-300"
+              ><i class="fa-brands fa-whatsapp"></i
+            ></a>
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              class="hover:text-[#1877F2] hover:-translate-y-1 transition-all duration-300"
+              ><i class="fa-brands fa-facebook"></i
+            ></a>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              class="hover:text-[#E1306C] hover:-translate-y-1 transition-all duration-300"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+            <a
+              href="https://tiktok.com"
+              target="_blank"
+              class="hover:text-white hover:-translate-y-1 transition-all duration-300"
+              ><i class="fa-brands fa-tiktok"></i
+            ></a>
+          </div>
+        </div>
+        <div>
+          <h5
+            class="font-black italic uppercase text-xs mb-6 text-red-600 tracking-widest"
+          >
+            Stay Updated
+          </h5>
+          <div class="flex gap-2">
+            <input
+              type="email"
+              placeholder="Email Address"
+              class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs outline-none focus:border-red-600 focus:bg-black transition-colors text-white"
+            />
+            <button
+              class="btn-red px-6 py-2 rounded-xl text-[10px] font-black uppercase hover:scale-105"
+            >
+              Join
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="text-center border-t border-white/5 pt-8">
+        <p
+          class="text-[9px] text-gray-600 font-black uppercase tracking-[0.3em] hover:text-red-600 transition-colors cursor-default"
+        >
+          © 2026 Warshal SHABBY STORE. DESIGNED FOR POWER.
+        </p>
+      </div>
+    </footer>
+
+    <!-- Unified Auth Modal (Login / Sign Up) -->
+    <div id="auth-modal" class="modal">
+      <div
+        class="bg-[#0f0f0f] w-full max-w-md p-8 rounded-[3rem] border border-red-600/20 shadow-2xl relative overflow-hidden flex flex-col items-center"
+      >
+        <button
+          onclick="window.closeModal('auth-modal')"
+          class="absolute top-6 right-6 text-gray-600 hover:text-white"
+        >
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+
+        <h3 class="font-black italic uppercase text-white text-2xl mb-8">
+          Account Access
+        </h3>
+
+        <!-- Switcher -->
+        <div
+          class="w-full bg-black rounded-full p-1 flex mb-8 relative border border-white/10"
+        >
+          <div
+            id="auth-switch-bg"
+            class="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-red-600 rounded-full transition-all duration-300 left-1 shadow-lg"
+          ></div>
+          <button
+            onclick="window.switchAuth('login')"
+            class="flex-1 py-3 text-xs font-black uppercase relative z-10 auth-switch-btn active"
+            id="btn-login"
+          >
+            Login
+          </button>
+          <button
+            onclick="window.switchAuth('signup')"
+            class="flex-1 py-3 text-xs font-black uppercase relative z-10 auth-switch-btn"
+            id="btn-signup"
+          >
+            Sign Up
+          </button>
+        </div>
+
+        <!-- Form Container -->
+        <div class="w-full relative overflow-hidden h-[300px]">
+          <!-- Login Form -->
+          <div
+            id="login-form"
+            class="absolute w-full top-0 left-0 transition-all duration-500 opacity-100 translate-x-0"
+          >
+            <div class="space-y-4">
+              <input
+                type="email"
+                id="login-email"
+                placeholder="Email Address"
+                class="mega-input text-sm"
+              />
+              <div class="relative">
+                <input
+                  type="password"
+                  id="login-pass"
+                  placeholder="Password"
+                  class="mega-input text-sm"
+                />
+                <i
+                  class="fa-solid fa-eye eye-toggle text-sm"
+                  onclick="window.togglePass('login-pass', this)"
+                ></i>
+              </div>
+              <button
+                onclick="window.handleAuth('login')"
+                class="btn-primary w-full py-4 rounded-xl font-black uppercase italic text-lg shadow-lg mt-2"
+              >
+                Login Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Sign Up Form -->
+          <div
+            id="signup-form"
+            class="absolute w-full top-0 left-0 transition-all duration-500 opacity-0 translate-x-full"
+          >
+            <div class="space-y-4">
+              <input
+                type="text"
+                id="signup-name"
+                placeholder="Full Name"
+                class="mega-input text-sm"
+              />
+              <input
+                type="email"
+                id="signup-email"
+                placeholder="Email Address"
+                class="mega-input text-sm"
+              />
+              <div class="relative">
+                <input
+                  type="password"
+                  id="signup-pass"
+                  placeholder="Create Password"
+                  class="mega-input text-sm"
+                />
+                <i
+                  class="fa-solid fa-eye eye-toggle text-sm"
+                  onclick="window.togglePass('signup-pass', this)"
+                ></i>
+              </div>
+              <button
+                onclick="window.handleAuth('signup')"
+                class="btn-primary w-full py-4 rounded-xl font-black uppercase italic text-lg shadow-lg mt-2"
+              >
+                Create Account
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Menu Modal (Logged In) -->
+    <div id="user-menu-modal" class="modal">
+      <div
+        class="bg-[#0f0f0f] w-full max-w-sm p-6 rounded-[2.5rem] border border-red-600/30 text-center relative"
+      >
+        <button
+          onclick="window.closeModal('user-menu-modal')"
+          class="absolute top-4 right-4 text-gray-500 hover:text-white"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div
+          class="w-20 h-20 bg-gradient-to-br from-red-600 to-black rounded-full mx-auto mb-4 flex items-center justify-center text-3xl text-white shadow-xl border-2 border-red-600"
+        >
+          <i class="fa-solid fa-user-astronaut"></i>
+        </div>
+        <h3 class="text-xl font-black text-white italic uppercase mb-1">
+          Welcome Back
+        </h3>
+        <p id="user-menu-email" class="text-xs text-gray-500 mb-8 font-mono">
+          user@example.com
+        </p>
+
+        <div class="space-y-3">
+          <button
+            id="admin-dashboard-btn"
+            onclick="window.openAdminPanel()"
+            class="hidden w-full py-4 rounded-xl bg-red-900/20 text-red-500 font-bold uppercase hover:bg-red-600 hover:text-white transition-all border border-red-600/30"
+          >
+            <i class="fa-solid fa-shield-halved mr-2"></i> Admin Dashboard
+          </button>
+          <button
+            onclick="window.handleLogout()"
+            class="w-full py-4 rounded-xl bg-white/5 text-gray-300 font-bold uppercase hover:bg-white/10 transition-all"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="modal">
+      <div
+        class="bg-[#0f0f0f] w-full max-w-5xl p-8 md:p-12 rounded-[3rem] border border-red-600/30 max-h-[90vh] overflow-y-auto"
+      >
+        <div
+          class="flex justify-between items-center mb-10 border-b border-white/5 pb-6"
+        >
+          <h2
+            class="text-3xl font-black italic uppercase text-white flex items-center gap-4"
+          >
+            <span class="w-3 h-12 bg-red-600 rounded-full"></span>
+            Admin Dashboard
+          </h2>
+          <button
+            onclick="window.closeModal('admin-panel')"
+            class="w-12 h-12 bg-white/5 rounded-full hover:bg-red-600 hover:text-white transition-all"
+          >
+            <i class="fa-solid fa-xmark text-xl"></i>
+          </button>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <form id="product-form" class="space-y-6">
+            <h4 class="text-xl font-bold text-gray-400 mb-4 uppercase italic">
+              Add New Drop
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="space-y-2">
+                <label
+                  class="text-[10px] uppercase font-bold text-red-600 tracking-widest"
+                  >Arabic Name</label
+                ><input
+                  type="text"
+                  id="p-name-ar"
+                  placeholder="اسم المنتج (عربي)"
+                  class="mega-input text-right"
+                  required
+                />
+              </div>
+              <div class="space-y-2">
+                <label
+                  class="text-[10px] uppercase font-bold text-red-600 tracking-widest"
+                  >English Name</label
+                ><input
+                  type="text"
+                  id="p-name-en"
+                  placeholder="Product Name (English)"
+                  class="mega-input text-left"
+                  required
+                />
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label
+                class="text-[10px] uppercase font-bold text-red-600 tracking-widest"
+                >Price</label
+              ><input
+                type="number"
+                id="p-price"
+                placeholder="Price (EGP)"
+                class="mega-input font-mono"
+                required
+              />
+            </div>
+            <div
+              class="border-2 border-dashed border-red-900/40 p-10 text-center rounded-3xl relative hover:border-red-600 hover:bg-red-600/5 transition-all group cursor-pointer"
+            >
+              <div
+                id="upload-icon"
+                class="text-4xl text-gray-600 mb-4 group-hover:text-red-600 transition-colors"
+              >
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+              </div>
+              <p
+                id="upload-label"
+                class="text-xs text-gray-500 font-black tracking-widest uppercase"
+              >
+                Click to Upload Image
+              </p>
+              <input
+                type="file"
+                id="p-file"
+                accept="image/*"
+                class="absolute inset-0 opacity-0 cursor-pointer"
+              />
+            </div>
+            <input type="hidden" id="p-base64" />
+            <button
+              type="submit"
+              class="btn-primary w-full py-5 rounded-2xl uppercase italic text-lg shadow-xl"
+            >
+              Publish Product <i class="fa-solid fa-rocket ml-2"></i>
+            </button>
+          </form>
+          <div
+            class="bg-black/50 rounded-[2rem] p-6 border border-white/5 max-h-[600px] overflow-y-auto"
+          >
+            <h4
+              class="text-xl font-bold text-gray-400 mb-6 uppercase italic sticky top-0 bg-[#0a0a0a] z-10 py-2"
+            >
+              Inventory
+            </h4>
+            <div id="admin-product-list" class="space-y-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Drawer & Checkout -->
+    <div id="cart-drawer" class="cart-drawer p-8 flex flex-col">
+      <div
+        class="flex justify-between items-center mb-10 pb-6 border-b border-white/5"
+      >
+        <h2 class="text-2xl font-black italic uppercase text-white">
+          Shopping Bag
+        </h2>
+        <button
+          onclick="window.toggleCartDrawer()"
+          class="text-gray-500 hover:text-red-600 transition-colors"
+        >
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+      </div>
+      <div id="cart-items" class="flex-1 overflow-y-auto space-y-4 pr-2"></div>
+      <div class="pt-8 mt-auto bg-[#080808]">
+        <div
+          class="flex justify-between items-center mb-8 bg-white/5 p-4 rounded-2xl border border-white/5"
+        >
+          <span
+            class="text-gray-400 font-black uppercase text-xs tracking-widest"
+            >Total</span
+          >
+          <span
+            id="cart-total"
+            class="text-2xl font-black text-red-500 font-mono"
+            >0 EGP</span
+          >
+        </div>
+        <button
+          onclick="window.openCheckout()"
+          class="btn-primary w-full py-5 rounded-2xl uppercase italic shadow-[0_0_30px_rgba(225,29,72,0.4)] text-lg"
+        >
+          Checkout Now
+        </button>
+      </div>
+    </div>
+
+    <div id="checkout-modal" class="modal">
+      <div
+        class="bg-[#0f0f0f] w-full max-w-md p-8 rounded-[2.5rem] border border-red-600/20 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative transform scale-90 transition-transform duration-300"
+        id="checkout-box"
+      >
+        <div
+          class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-[#0f0f0f] rounded-full border border-red-600/20 flex items-center justify-center shadow-xl"
+        >
+          <i class="fa-brands fa-whatsapp text-3xl text-green-500"></i>
+        </div>
+        <h3
+          class="text-2xl font-black italic uppercase mb-8 mt-6 text-white text-center"
+        >
+          Complete Order
+        </h3>
+        <div class="space-y-4">
+          <input
+            type="text"
+            id="cust-name"
+            placeholder="Full Name"
+            class="mega-input text-sm"
+          />
+          <input
+            type="tel"
+            id="cust-phone"
+            placeholder="Phone Number"
+            class="mega-input text-sm"
+          />
+          <textarea
+            id="cust-address"
+            placeholder="Detailed Address"
+            class="mega-input text-sm h-32 resize-none"
+          ></textarea>
+          <button
+            onclick="window.confirmOrder()"
+            class="btn-primary w-full py-4 rounded-xl uppercase italic text-lg shadow-lg"
+          >
+            Order via WhatsApp
+          </button>
+          <button
+            onclick="window.closeModal('checkout-modal')"
+            class="w-full text-gray-500 text-xs font-bold uppercase mt-2 hover:text-white transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Modal -->
+    <div id="feature-modal" class="modal">
+      <div
+        class="bg-[#0f0f0f] w-full max-w-xl p-10 rounded-[2.5rem] border border-red-600/30 relative max-h-[90vh] overflow-y-auto"
+      >
+        <button
+          onclick="window.closeModal('feature-modal')"
+          class="absolute top-6 left-6 w-8 h-8 flex items-center justify-center bg-white/5 rounded-full text-gray-400 hover:text-white hover:bg-red-600 transition-all z-10"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <h3
+          id="feature-title"
+          class="text-3xl font-black italic uppercase mb-8 text-red-600 tracking-tight"
+        >
+          Title
+        </h3>
+        <div id="feature-content-container" class="space-y-6"></div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        addDoc,
+        onSnapshot,
+        query,
+        orderBy,
+        doc,
+        deleteDoc,
+        updateDoc,
+        increment,
+      } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+      import {
+        getAuth,
+        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
+        onAuthStateChanged,
+        signOut,
+        updateProfile,
+      } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCyGAl91G5kOv7diV3clu-0DdXjDPHez0M",
+        authDomain: "warshelapp-805c9.firebaseapp.com",
+        projectId: "warshelapp-805c9",
+        storageBucket: "warshelapp-805c9.firebasestorage.app",
+        messagingSenderId: "662246319008",
+        appId: "1:662246319008:web:f95d2f57336bcfe6f4bac5",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      const auth = getAuth(app);
+      const appId = "shabby-store-v21";
+
+      let currentLang = "AR";
+      let cart = [];
+      let currentUser = null;
+      let allProducts = [];
+      let allReviews = [];
+      let authMode = "login";
+
+      const ADMIN_EMAIL = "admin@shabby.com";
+
+      const texts = {
+        AR: {
+          heroTitle: "STREET <span class='glow-text'>POWER</span>",
+          heroDesc:
+            "ملابس الشارع المصممة لتعكس شخصيتك القوية بلمسة مصرية عالمية.",
+          shopBtn: "تسوق الآن",
+          dropsTitle: "أحدث الموديلات",
+          fReviews: "آراء العملاء",
+          fExp: "التجربة",
+          fFabric: "القماش",
+          fAbout: "من نحن",
+          aboutContent:
+            "شابي ستور هي براند مصري بيقدم مفهوم جديد لملابس الشارع، بنهتم بكل تفصيلة عشان نطلع قطعة فنية مش مجرد لبس.",
+          fabricContent:
+            "بنستخدم قطن مصري 100% ثقيل (Heavyweight Cotton) عشان نضمن الراحة والمتانة مع اللبس الكتير.",
+          expContent:
+            "تجربة شابي ستور بتبدأ من أول ما تدخل الموقع لحد ما الأوردر يوصلك في أسرع وقت بباكيدجينج شيك.",
+          toastAdded: "تم الإضافة للحقيبة!",
+          bagEmpty: "الحقيبة فارغة",
+          welcome: "مرحباً",
+          loginSuccess: "تم تسجيل الدخول",
+          signupSuccess: "تم إنشاء الحساب",
+          logout: "تم تسجيل الخروج",
+          addReview: "أضف تقييمك",
+          reviewPlaceholder: "اكتب تجربتك هنا...",
+          submitReview: "نشر التقييم",
+          loginToReview: "سجل دخولك لتكتب تقييم",
+        },
+        EN: {
+          heroTitle: "STREET <span class='glow-text'>POWER</span>",
+          heroDesc:
+            "Streetwear designed to reflect your power with a global Egyptian touch.",
+          shopBtn: "Shop Now",
+          dropsTitle: "Fresh Drops",
+          fReviews: "Reviews",
+          fExp: "Experience",
+          fFabric: "Fabric",
+          fAbout: "About Us",
+          aboutContent:
+            "Shabby Store is an Egyptian brand redefining streetwear, focusing on every detail for a unique identity.",
+          fabricContent:
+            "We use 100% Egyptian heavyweight cotton to ensure ultimate comfort and durability.",
+          expContent:
+            "The Shabby experience is seamless, from browsing to premium-packaged fast delivery.",
+          toastAdded: "Added to Bag!",
+          bagEmpty: "Bag is Empty",
+          welcome: "Welcome",
+          loginSuccess: "Login Successful",
+          signupSuccess: "Account Created",
+          logout: "Logged Out",
+          addReview: "Add Your Review",
+          reviewPlaceholder: "Write your experience here...",
+          submitReview: "Post Review",
+          loginToReview: "Login to write a review",
+        },
+      };
+
+      const scrollObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("active");
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      onAuthStateChanged(auth, (user) => {
+        currentUser = user;
+        updateUserUI();
+        loadProducts();
+        loadReviews();
+      });
+
+      function updateUserUI() {
+        const iconBtn = document.getElementById("user-icon-btn");
+        const statusDot = document.getElementById("user-status-dot");
+        const adminBtn = document.getElementById("admin-dashboard-btn");
+        const userEmail = document.getElementById("user-menu-email");
+
+        if (currentUser) {
+          statusDot.classList.remove("hidden");
+          userEmail.innerText = currentUser.email;
+          if (currentUser.email === ADMIN_EMAIL) {
+            adminBtn.classList.remove("hidden");
+            adminBtn.classList.add("block");
+          } else {
+            adminBtn.classList.add("hidden");
+          }
+        } else {
+          statusDot.classList.add("hidden");
+        }
+      }
+
+      window.handleUserIconClick = () => {
+        if (currentUser) {
+          document.getElementById("user-menu-modal").classList.add("active");
+        } else {
+          document.getElementById("auth-modal").classList.add("active");
+        }
+      };
+
+      window.switchAuth = (mode) => {
+        authMode = mode;
+        const bg = document.getElementById("auth-switch-bg");
+        const btnLogin = document.getElementById("btn-login");
+        const btnSignup = document.getElementById("btn-signup");
+        const formLogin = document.getElementById("login-form");
+        const formSignup = document.getElementById("signup-form");
+
+        if (mode === "login") {
+          bg.style.left = "4px";
+          btnLogin.classList.add("active");
+          btnSignup.classList.remove("active");
+          formLogin.style.transform = "translateX(0)";
+          formLogin.style.opacity = "1";
+          formSignup.style.transform = "translateX(100%)";
+          formSignup.style.opacity = "0";
+        } else {
+          bg.style.left = "calc(50%)";
+          btnSignup.classList.add("active");
+          btnLogin.classList.remove("active");
+          formLogin.style.transform = "translateX(-100%)";
+          formLogin.style.opacity = "0";
+          formSignup.style.transform = "translateX(0)";
+          formSignup.style.opacity = "1";
+        }
+      };
+
+      window.handleAuth = async (action) => {
+        const t = texts[currentLang];
+        try {
+          if (action === "login") {
+            const email = document.getElementById("login-email").value;
+            const pass = document.getElementById("login-pass").value;
+            await signInWithEmailAndPassword(auth, email, pass);
+            showToast(t.loginSuccess);
+          } else {
+            const name = document.getElementById("signup-name").value;
+            const email = document.getElementById("signup-email").value;
+            const pass = document.getElementById("signup-pass").value;
+            if (!name || !email || !pass)
+              return showToast("All fields required");
+
+            const cred = await createUserWithEmailAndPassword(
+              auth,
+              email,
+              pass
+            );
+            await updateProfile(cred.user, { displayName: name });
+            showToast(t.signupSuccess);
+          }
+          window.closeModal("auth-modal");
+        } catch (e) {
+          console.error(e);
+          let msg = "Error Occurred";
+          if (e.code === "auth/wrong-password") msg = "Incorrect Password";
+          if (e.code === "auth/user-not-found") msg = "User not found";
+          if (e.code === "auth/email-already-in-use")
+            msg = "Email already used";
+          showToast(msg);
+        }
+      };
+
+      window.handleLogout = async () => {
+        await signOut(auth);
+        window.closeModal("user-menu-modal");
+        showToast(texts[currentLang].logout);
+      };
+
+      window.openAdminPanel = () => {
+        window.closeModal("user-menu-modal");
+        document.getElementById("admin-panel").classList.add("active");
+      };
+
+      window.togglePass = (id, el) => {
+        const input = document.getElementById(id);
+        if (input.type === "password") {
+          input.type = "text";
+          el.classList.replace("fa-eye", "fa-eye-slash");
+        } else {
+          input.type = "password";
+          el.classList.replace("fa-eye-slash", "fa-eye");
+        }
+      };
+
+      function loadProducts() {
+        const q = query(
+          collection(db, "artifacts", appId, "public", "data", "products"),
+          orderBy("createdAt", "desc")
+        );
+        onSnapshot(q, (snap) => {
+          allProducts = [];
+          snap.forEach((docSnap) => {
+            allProducts.push({ id: docSnap.id, ...docSnap.data() });
+          });
+          renderProducts();
+        });
+      }
+
+      function loadReviews() {
+        const q = query(
+          collection(db, "artifacts", appId, "public", "data", "reviews"),
+          orderBy("createdAt", "desc")
+        );
+        onSnapshot(q, (snap) => {
+          allReviews = [];
+          snap.forEach((docSnap) => {
+            allReviews.push({ id: docSnap.id, ...docSnap.data() });
+          });
+          // Refresh content if active modal is Reviews or Experience
+          const modal = document.getElementById("feature-modal");
+          const title = document.getElementById("feature-title");
+          if (modal.classList.contains("active")) {
+            if (title.innerText === texts[currentLang].fReviews)
+              window.openFeature("reviews");
+            if (title.innerText === texts[currentLang].fExp)
+              window.openFeature("exp");
+          }
+        });
+      }
+
+      function renderProducts() {
+        const grid = document.getElementById("products-grid");
+        const adminList = document.getElementById("admin-product-list");
+        grid.innerHTML = "";
+        adminList.innerHTML = "";
+
+        allProducts.forEach((p, index) => {
+          const displayName =
+            currentLang === "AR" ? p.nameAr || p.name : p.nameEn || p.name;
+          const likes = p.likes || 0;
+
+          const cardHTML = `
+                <div class="product-card rounded-[2.5rem] overflow-hidden reveal relative group" style="transition-delay: ${
+                  index * 100
+                }ms">
+                    <div class="h-[480px] bg-[#111] relative overflow-hidden">
+                        <img src="${
+                          p.image
+                        }" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
+                        
+                        <!-- Like Button -->
+                        <button onclick="window.toggleLike('${
+                          p.id
+                        }')" class="absolute top-4 left-4 z-20 w-10 h-10 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10 hover:bg-white/10 transition-all like-btn">
+                            <i class="fa-regular fa-heart text-white text-lg ${
+                              likes > 0 ? "text-red-500 font-black" : ""
+                            }"></i>
+                        </button>
+                        <span class="absolute top-6 left-16 z-20 text-xs font-bold text-white drop-shadow-md">${
+                          likes > 0 ? likes : ""
+                        }</span>
+
+                        <button onclick="window.addToCart('${
+                          p.id
+                        }')" class="absolute bottom-6 left-6 right-6 btn-primary py-4 rounded-2xl italic font-black text-sm translate-y-24 group-hover:translate-y-0 transition-all duration-500 shadow-2xl z-20">
+                            ${
+                              currentLang === "AR" ? "أضف للسلة" : "ADD TO BAG"
+                            } <i class="fa-solid fa-cart-plus ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-4 right-4 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 z-10">
+                        <span class="text-red-500 font-black font-mono">${
+                          p.price
+                        } EGP</span>
+                    </div>
+                    <div class="p-6 absolute bottom-20 left-0 w-full pointer-events-none group-hover:opacity-0 transition-opacity duration-300">
+                        <h3 class="font-black uppercase text-xl text-white italic tracking-wider drop-shadow-lg text-center">${displayName}</h3>
+                    </div>
+                </div>`;
+          grid.innerHTML += cardHTML;
+
+          if (currentUser && currentUser.email === ADMIN_EMAIL) {
+            adminList.innerHTML += `
+                    <div class='flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/5 hover:border-red-600/50 transition-all group'>
+                        <div class="flex items-center gap-4">
+                            <img src="${
+                              p.image
+                            }" class="w-10 h-10 rounded-lg object-cover">
+                            <div class="flex flex-col">
+                                <span class="text-white text-xs font-bold">${
+                                  p.nameEn || p.name
+                                }</span>
+                                <span class="text-gray-500 text-[10px]">${
+                                  p.nameAr || "-"
+                                }</span>
+                            </div>
+                        </div>
+                        <button onclick="window.deleteProduct('${
+                          p.id
+                        }')" class='w-8 h-8 rounded-full bg-red-900/20 text-red-500 hover:bg-red-600 hover:text-white flex items-center justify-center transition-all'><i class="fa-solid fa-trash text-xs"></i></button>
+                    </div>`;
+          }
+        });
+        document
+          .querySelectorAll(".reveal")
+          .forEach((el) => scrollObserver.observe(el));
+      }
+
+      window.toggleLike = async (id) => {
+        if (!currentUser) {
+          showToast(texts[currentLang].loginToReview);
+          return document.getElementById("auth-modal").classList.add("active");
+        }
+        const productRef = doc(
+          db,
+          "artifacts",
+          appId,
+          "public",
+          "data",
+          "products",
+          id
+        );
+        await updateDoc(productRef, { likes: increment(1) });
+      };
+
+      window.addToCart = (id) => {
+        const product = allProducts.find((p) => p.id === id);
+        if (product) {
+          cart.push(product);
+          updateCartUI();
+          showToast(texts[currentLang].toastAdded);
+        }
+      };
+
+      function updateCartUI() {
+        const itemsCont = document.getElementById("cart-items");
+        document.getElementById("cart-count").innerText = cart.length;
+        itemsCont.innerHTML = "";
+        let total = 0;
+        if (cart.length === 0)
+          itemsCont.innerHTML = `<div class="text-center text-gray-600 py-10 italic">Your bag is empty</div>`;
+        cart.forEach((item, idx) => {
+          total += item.price;
+          const dName =
+            currentLang === "AR"
+              ? item.nameAr || item.name
+              : item.nameEn || item.name;
+          itemsCont.innerHTML += `
+                <div class="flex gap-4 bg-white/5 p-3 rounded-2xl items-center border border-white/5 hover:bg-white/10 transition-colors animate-[fadeIn_0.3s]">
+                    <img src="${item.image}" class="w-16 h-16 rounded-xl object-cover border border-white/5">
+                    <div class="flex-1">
+                        <div class="text-xs font-black text-white uppercase italic mb-1">${dName}</div>
+                        <div class="text-red-500 font-mono text-xs">${item.price} EGP</div>
+                    </div>
+                    <button onclick="window.removeFromCart(${idx})" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
+                </div>`;
+        });
+        document.getElementById("cart-total").innerText = total + " EGP";
+      }
+
+      window.removeFromCart = (idx) => {
+        cart.splice(idx, 1);
+        updateCartUI();
+      };
+      window.openCheckout = () => {
+        if (cart.length === 0) return showToast(texts[currentLang].bagEmpty);
+        document.getElementById("checkout-modal").classList.add("active");
+        setTimeout(
+          () =>
+            document
+              .getElementById("checkout-box")
+              .classList.replace("scale-90", "scale-100"),
+          10
+        );
+      };
+
+      window.confirmOrder = async () => {
+        const n = document.getElementById("cust-name").value;
+        const p = document.getElementById("cust-phone").value;
+        const a = document.getElementById("cust-address").value;
+
+        if (!n || !p || !a) return showToast("Please fill all fields");
+
+        let total = 0;
+        cart.forEach((item) => (total += item.price));
+
+        let msg = `🛍️ *ORDER - SHABBY STORE*\n━━━━━━━━━━━━━━━\n👤 *Client:* ${n}\n📞 *Phone:* ${p}\n🏠 *Addr:* ${a}\n━━━━━━━━━━━━━━━\n📦 *Items:*\n`;
+        cart.forEach((item) => {
+          const dName =
+            currentLang === "AR"
+              ? item.nameAr || item.name
+              : item.nameEn || item.name;
+          msg += `▪️ ${dName} - ${item.price} EGP\n`;
+        });
+        msg += `━━━━━━━━━━━━━━━\n💰 *TOTAL:* ${total} EGP`;
+
+        try {
+          addDoc(
+            collection(db, "artifacts", appId, "public", "data", "orders"),
+            {
+              customerName: n,
+              customerPhone: p,
+              customerAddress: a,
+              items: cart.map((i) => ({
+                name: i.nameEn || i.name,
+                price: i.price,
+              })),
+              totalPrice: total,
+              status: "new",
+              createdAt: Date.now(),
+              userId: currentUser ? currentUser.uid : "guest",
+            }
+          );
+        } catch (e) {
+          console.error("DB Save Error", e);
+        }
+
+        window.closeModal("checkout-modal");
+        const drawer = document.getElementById("cart-drawer");
+        if (drawer.classList.contains("active")) window.toggleCartDrawer();
+
+        cart = [];
+        updateCartUI();
+        window.open(
+          `https://wa.me/201021487635?text=${encodeURIComponent(msg)}`
+        );
+      };
+
+      window.openFeature = (type) => {
+        const m = document.getElementById("feature-modal");
+        const t = document.getElementById("feature-title");
+        const c = document.getElementById("feature-content-container");
+        m.classList.add("active");
+        const lang = texts[currentLang];
+
+        if (type === "reviews" || type === "exp") {
+          t.innerText = type === "reviews" ? lang.fReviews : lang.fExp;
+
+          // If Type is Experience, Add Intro Text First
+          let contentHTML = "";
+          if (type === "exp") {
+            contentHTML += `<p class="text-gray-300 leading-relaxed text-lg font-light mb-8 border-b border-white/10 pb-8">${lang["expContent"]}</p>`;
+          }
+
+          let formHTML = "";
+          if (currentUser) {
+            formHTML = `
+                <div class="bg-white/5 p-6 rounded-3xl border border-white/5 mb-8">
+                    <h4 class="text-white font-bold mb-4 text-sm uppercase italic">${lang.addReview}</h4>
+                    <div class="star-rating mb-4 justify-end flex-row-reverse">
+                        <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars">★</label>
+                        <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars">★</label>
+                        <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars">★</label>
+                        <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars">★</label>
+                        <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star">★</label>
+                    </div>
+                    <textarea id="review-text" class="mega-input text-sm h-24 resize-none mb-4" placeholder="${lang.reviewPlaceholder}"></textarea>
+                    <button onclick="window.submitReview()" class="btn-primary w-full py-3 rounded-xl uppercase italic text-sm font-black">${lang.submitReview}</button>
+                </div>`;
+          } else {
+            formHTML = `<div onclick="document.getElementById('auth-modal').classList.add('active')" class="bg-red-900/20 p-4 rounded-2xl text-center text-red-400 font-bold mb-8 cursor-pointer border border-red-600/20 hover:bg-red-900/30 transition-all">${lang.loginToReview}</div>`;
+          }
+
+          const listHTML = allReviews
+            .map((r) => {
+              let stars = "";
+              for (let i = 0; i < 5; i++)
+                stars +=
+                  i < r.rating
+                    ? '<i class="fa-solid fa-star"></i>'
+                    : '<i class="fa-regular fa-star text-gray-600"></i>';
+              return `<div class="bg-white/5 p-6 rounded-3xl border border-white/5">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex text-red-600 text-xs gap-1">${stars}</div>
+                        <span class="text-[10px] text-gray-500 font-mono">${new Date(
+                          r.createdAt
+                        ).toLocaleDateString()}</span>
+                    </div>
+                    <p class="italic text-sm text-gray-200 leading-relaxed">"${
+                      r.text
+                    }"</p>
+                    <div class="mt-4 text-[10px] font-black text-[#d6c9b1] uppercase tracking-widest flex items-center gap-2">
+                        <span class="w-2 h-2 bg-red-600 rounded-full"></span> ${
+                          r.userName
+                        }
+                    </div>
+                </div>`;
+            })
+            .join("");
+
+          c.innerHTML =
+            contentHTML +
+            formHTML +
+            (listHTML ||
+              '<p class="text-center text-gray-500 italic">No reviews yet.</p>');
+        } else {
+          t.innerText =
+            lang["f" + type.charAt(0).toUpperCase() + type.slice(1)];
+          c.innerHTML = `<p class="text-gray-300 leading-relaxed text-lg font-light">${
+            lang[type + "Content"]
+          }</p>`;
+        }
+      };
+
+      window.submitReview = async () => {
+        const text = document.getElementById("review-text").value;
+        const ratingEls = document.getElementsByName("rating");
+        let rating = 0;
+        for (let el of ratingEls) if (el.checked) rating = parseInt(el.value);
+        if (rating === 0) return showToast("Select stars!");
+        if (!text) return showToast("Write something!");
+        await addDoc(
+          collection(db, "artifacts", appId, "public", "data", "reviews"),
+          {
+            userId: currentUser.uid,
+            userName: currentUser.displayName || "Customer",
+            text: text,
+            rating: rating,
+            createdAt: Date.now(),
+          }
+        );
+        showToast("Review Posted!");
+        document.getElementById("review-text").value = "";
+        for (let el of ratingEls) el.checked = false;
+      };
+
+      window.toggleLanguage = () => {
+        currentLang = currentLang === "AR" ? "EN" : "AR";
+        document.documentElement.dir = currentLang === "AR" ? "rtl" : "ltr";
+        document.getElementById("lang-btn").innerText =
+          currentLang === "AR" ? "EN" : "AR";
+        const t = texts[currentLang];
+        document.getElementById("hero-title").innerHTML = t.heroTitle;
+        document.getElementById("hero-desc").innerText = t.heroDesc;
+        document.getElementById("shop-btn").innerText = t.shopBtn;
+        document.getElementById("drops-title").innerText = t.dropsTitle;
+        document.getElementById("f-reviews-title").innerText = t.fReviews;
+        document.getElementById("f-exp-title").innerText = t.fExp;
+        document.getElementById("f-fabric-title").innerText = t.fFabric;
+        document.getElementById("f-about-title").innerText = t.fAbout;
+        renderProducts();
+        updateCartUI();
+      };
+
+      window.closeModal = (id) => {
+        const el = document.getElementById(id);
+        el.style.opacity = "0";
+        setTimeout(() => {
+          el.classList.remove("active");
+          el.style.opacity = "1";
+          if (id === "checkout-modal")
+            document
+              .getElementById("checkout-box")
+              .classList.replace("scale-100", "scale-90");
+        }, 300);
+      };
+      window.toggleCartDrawer = () =>
+        document.getElementById("cart-drawer").classList.toggle("active");
+
+      document.getElementById("p-file").onchange = (e) => {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          document.getElementById("p-base64").value = ev.target.result;
+          document.getElementById("upload-label").innerText = "IMAGE READY ✅";
+          document.getElementById("upload-label").classList.add("text-red-600");
+          document.getElementById("upload-icon").classList.add("text-red-600");
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      };
+
+      document.getElementById("product-form").onsubmit = async (e) => {
+        e.preventDefault();
+        const img = document.getElementById("p-base64").value;
+        if (!img) return showToast("Select Image First");
+        await addDoc(
+          collection(db, "artifacts", appId, "public", "data", "products"),
+          {
+            nameAr: document.getElementById("p-name-ar").value,
+            nameEn: document.getElementById("p-name-en").value,
+            name: document.getElementById("p-name-en").value,
+            price: parseFloat(document.getElementById("p-price").value),
+            image: img,
+            likes: 0,
+            createdAt: Date.now(),
+          }
+        );
+        e.target.reset();
+        document.getElementById("upload-label").innerText =
+          "CLICK TO UPLOAD IMAGE";
+        document
+          .getElementById("upload-label")
+          .classList.remove("text-red-600");
+        showToast("Drop Published!");
+      };
+
+      window.deleteProduct = (id) =>
+        confirm("Delete this drop?") &&
+        deleteDoc(
+          doc(db, "artifacts", appId, "public", "data", "products", id)
+        );
+      function showToast(m) {
+        const t = document.getElementById("toast");
+        document.getElementById("toast-msg").innerText = m;
+        t.classList.add("active");
+        setTimeout(() => t.classList.remove("active"), 3000);
+      }
+      setTimeout(() => {
+        document
+          .querySelectorAll(".reveal")
+          .forEach((el) => scrollObserver.observe(el));
+      }, 500);
+    </script>
+  </body>
+</html>
