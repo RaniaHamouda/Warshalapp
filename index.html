@@ -1447,6 +1447,9 @@
       };
       window.openCheckout = () => {
         if (cart.length === 0) return showToast(texts[currentLang].bagEmpty);
+        // FIX: Close the cart drawer immediately so it doesn't stay open
+        document.getElementById("cart-drawer").classList.remove("active");
+        
         document.getElementById("checkout-modal").classList.add("active");
         setTimeout(
           () =>
@@ -1499,14 +1502,15 @@
         }
 
         window.closeModal("checkout-modal");
+        
         const drawer = document.getElementById("cart-drawer");
         if (drawer.classList.contains("active")) window.toggleCartDrawer();
 
         cart = [];
         updateCartUI();
-        window.open(
-          `https://wa.me/201021487635?text=${encodeURIComponent(msg)}`
-        );
+        
+        // FIX: Use location.href instead of window.open for direct redirection (no new window/tab)
+        window.location.href = `https://wa.me/201021487635?text=${encodeURIComponent(msg)}`;
       };
 
       window.openFeature = (type) => {
