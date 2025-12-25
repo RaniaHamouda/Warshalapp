@@ -7,7 +7,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&family=Inter:wght@400;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Inter:wght@400;700;900&display=swap"
       rel="stylesheet"
     />
     <link
@@ -29,7 +29,8 @@
       }
 
       :root {
-        --font-ar: "KO Ghorab", "Cairo", sans-serif;
+        /* UPDATED: جعلت Cairo هو الخط الأول والأساسي للغة العربية ليكون "عادي" ومقروء */
+        --font-ar: "Cairo", "KO Ghorab", sans-serif;
         --font-en: "29LT Bukra Wide", "Inter", sans-serif;
         --brand-red: #e11d48;
         --brand-beige: #d6c9b1;
@@ -38,6 +39,8 @@
       /* --- Global Styles --- */
       [dir="rtl"] body {
         font-family: var(--font-ar);
+        /* UPDATED: تكبير حجم الخط الأساسي قليلاً كما طلبت */
+        font-size: 18px; 
       }
       [dir="ltr"] body {
         font-family: var(--font-en);
@@ -47,19 +50,21 @@
         background-color: #050505;
         color: #f3f4f6;
         overflow-x: hidden;
+        
+        /* UPDATED: زيادة قوة الألوان في الخلفية لتكون ظاهرة أكثر */
         background-image: radial-gradient(
             circle at 5% 10%,
-            rgba(225, 29, 72, 0.2) 0%,
+            rgba(225, 29, 72, 0.65) 0%, 
             transparent 50%
           ),
           radial-gradient(
             circle at 95% 90%,
-            rgba(214, 201, 177, 0.15) 0%,
+            rgba(214, 201, 177, 0.45) 0%,
             transparent 50%
           ),
           radial-gradient(
             circle at 50% 50%,
-            rgba(225, 29, 72, 0.1) 0%,
+            rgba(225, 29, 72, 0.25) 0%,
             transparent 80%
           );
         background-attachment: fixed;
@@ -89,10 +94,11 @@
         }
       }
 
+      /* UPDATED: تحسين حركة الظهور لتكون أكثر سلاسة */
       .reveal {
         opacity: 0;
-        transform: translateY(50px);
-        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        transform: translateY(30px);
+        transition: all 1s cubic-bezier(0.5, 0, 0, 1);
       }
       .reveal.active {
         opacity: 1;
@@ -309,6 +315,7 @@
       .auth-switch-btn {
         color: #666;
         transition: 0.3s;
+        cursor: pointer;
       }
 
       /* Star Rating Styles */
@@ -333,6 +340,7 @@
       }
     </style>
   </head>
+  <!-- UPDATED: Added reveal class to body for global entry animation (optional) or kept on sections -->
   <body>
     <div
       id="toast"
@@ -342,8 +350,9 @@
     </div>
 
     <!-- Navbar -->
+    <!-- UPDATED: Added reveal class here -->
     <nav
-      class="fixed top-0 w-full z-[100] glass-nav h-20 transition-all duration-300"
+      class="fixed top-0 w-full z-[100] glass-nav h-20 transition-all duration-300 reveal active"
       id="main-nav"
     >
       <div
@@ -429,7 +438,7 @@
         </h1>
         <p
           id="hero-desc"
-          class="text-gray-300 text-lg max-w-3xl mx-auto mb-12 mt-20 leading-relaxed font-medium"
+          class="text-gray-300 text-lg max-w-3xl mx-auto mb-12 mt-20 leading-relaxed font-bold"
         >
           “Designed for comfort, made for everyday wear. Our hoodies combine
           premium fabrics with modern designs to keep you warm and stylish all
@@ -450,14 +459,14 @@
       class="max-w-3xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 reveal"
     >
       <div
-        onclick="window.openFeature('review')"
+        onclick="window.openFeature('reviews')"
         class="bg-gradient-to-b from-white/5 to-transparent p-8 rounded-full text-center border border-white/5 cursor-pointer hover:border-red-600 transition-all group hover:-translate-y-2"
       >
         <div
-          class="w-full h-full mx-auto bg-[#996A53] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(225,29,72,0.2)]"
+          class="w-full h-full mx-auto rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform bg-red-800 shadow-[0_0_20px_rgba(225,29,72,0.2)]"
         >
           <!-- <i class="fa-solid fa-star text-red-600 text-xl"></i> -->
-          <img class="rounded-full" src="img/اراء عملائنا png.png" alt="" />
+          <img class="rounded-full " src="img/اراء عملائنا png2.png" alt="" />
         </div>
         <h4
           id="f-reviews-title"
@@ -471,10 +480,10 @@
         class="bg-gradient-to-b from-white/5 to-transparent p-8 rounded-full text-center border border-white/5 cursor-pointer hover:border-red-600 transition-all group hover:-translate-y-2"
       >
         <div
-          class="w-full h-full mx-auto bg-[#996A53] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(225,29,72,0.2)]"
+          class="w-full h-full mx-auto bg-red-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(225,29,72,0.2)]"
         >
           <!-- <i class="fa-solid fa-bolt text-red-600 text-xl"></i> -->
-          <img src="img/التجربة png.png" alt="" />
+          <img src="img/التجربة png 2.png" alt="" />
         </div>
         <h4
           id="f-exp-title"
@@ -488,10 +497,10 @@
         class="bg-gradient-to-b from-white/5 to-transparent p-8 rounded-full text-center border border-white/5 cursor-pointer hover:border-red-600 transition-all group hover:-translate-y-2"
       >
         <div
-          class="w-full h-full mx-auto bg-[#996A53] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(225,29,72,0.2)]"
+          class="w-full h-full mx-auto bg-red-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(225,29,72,0.2)]"
         >
           <!-- <i class="fa-solid fa-shirt text-red-600 text-xl"></i> -->
-          <img src="img/الخامة png.png" alt="" />
+          <img src="img/الخامة png2.png" alt="" />
         </div>
         <h4
           id="f-fabric-title"
@@ -505,10 +514,10 @@
         class="bg-gradient-to-b from-white/5 to-transparent p-8 rounded-full text-center border border-white/5 cursor-pointer hover:border-red-600 transition-all group hover:-translate-y-2"
       >
         <div
-          class="w-full h-full mx-auto bg-[#996A53] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(225,29,72,0.2)]"
+          class="w-full h-full mx-auto bg-red-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(225,29,72,0.2)]"
         >
           <!-- <i class="fa-solid fa-flag text-red-600 text-xl"></i> -->
-          <img src="img/من نحن png.png" alt="" />
+          <img src="img/من نحن png2.png" alt="" />
         </div>
         <h4
           id="f-about-title"
@@ -536,7 +545,8 @@
       ></div>
     </main>
     <!-- Features Section (السكشن الثاني المطلوب) -->
-    <section class="py-20 relative border-y border-[#cc1b1b]">
+    <!-- UPDATED: Added reveal class here -->
+    <section class="py-20 relative border-y border-[#cc1b1b] reveal">
       <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
         <div class="text-center reveal">
           <div
@@ -573,8 +583,9 @@
       </div>
     </section>
     <!-- Footer -->
+    <!-- UPDATED: Added reveal class here -->
     <footer
-      class="bg-[#080808] border-t border-red-900/20 pt-20 pb-10 px-6 relative overflow-hidden"
+      class="bg-[#080808] border-t border-red-900/20 pt-20 pb-10 px-6 relative overflow-hidden reveal"
     >
       <div
         class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-50"
@@ -589,7 +600,7 @@
           >
           <p
             id="footer-about"
-            class="text-gray-400 text-sm leading-relaxed max-w-xs"
+            class="text-gray-400 text-sm leading-relaxed max-w-xs font-bold"
           >
             Streetwear designed for power. Egyptian Identity with global styles
           </p>
@@ -651,7 +662,7 @@
         <p
           class="text-[9px] text-gray-600 font-black uppercase tracking-[0.3em] hover:text-red-600 transition-colors cursor-default"
         >
-          © 2026 Warshal SHABBY STORE. DESIGNED FOR POWER.
+          © 2026 Warshal STORE. DESIGNED FOR POWER.
         </p>
       </div>
     </footer>
@@ -697,7 +708,8 @@
         </div>
 
         <!-- Form Container -->
-        <div class="w-full relative overflow-hidden h-[300px]">
+        <!-- UPDATED: Increased height from 300px to 450px to ensure the signup form fits on mobile -->
+        <div class="w-full relative overflow-hidden h-[450px]">
           <!-- Login Form -->
           <div
             id="login-form"
@@ -956,7 +968,7 @@
           onclick="window.openCheckout()"
           class="btn-primary w-full py-5 rounded-2xl uppercase italic shadow-[0_0_30px_rgba(225,29,72,0.4)] text-lg"
         >
-          Checkout Now
+          Checkout
         </button>
       </div>
     </div>
@@ -1079,7 +1091,7 @@
 
       const texts = {
         AR: {
-          heroTitle: "STREET <span class='glow-text'>POWER</span>",
+          heroTitle: "WARSHAL<span class='glow-text'>POWER</span>",
           heroDesc:
             "ملابس الشارع المصممة لتعكس شخصيتك القوية بلمسة مصرية عالمية.",
           shopBtn: "تسوق الآن",
@@ -1089,11 +1101,11 @@
           fFabric: "القماش",
           fAbout: "من نحن",
           aboutContent:
-            "شابي ستور هي براند مصري بيقدم مفهوم جديد لملابس الشارع، بنهتم بكل تفصيلة عشان نطلع قطعة فنية مش مجرد لبس.",
+            "وارشل ستور هي براند مصري بيقدم مفهوم جديد لملابس الشارع، بنهتم بكل تفصيلة عشان نطلع قطعة فنية مش مجرد لبس.",
           fabricContent:
             "بنستخدم قطن مصري 100% ثقيل (Heavyweight Cotton) عشان نضمن الراحة والمتانة مع اللبس الكتير.",
           expContent:
-            "تجربة شابي ستور بتبدأ من أول ما تدخل الموقع لحد ما الأوردر يوصلك في أسرع وقت بباكيدجينج شيك.",
+            "تجربة وراشل ستور بتبدأ من أول ما تدخل الموقع لحد ما الأوردر يوصلك في أسرع وقت بباكيدجينج شيك.",
           toastAdded: "تم الإضافة للحقيبة!",
           bagEmpty: "الحقيبة فارغة",
           welcome: "مرحباً",
@@ -1106,7 +1118,7 @@
           loginToReview: "سجل دخولك لتكتب تقييم",
         },
         EN: {
-          heroTitle: "STREET <span class='glow-text'>POWER</span>",
+          heroTitle: "WARSHAL <span class='glow-text'>POWER</span>",
           heroDesc:
             "Streetwear designed to reflect your power with a global Egyptian touch.",
           shopBtn: "Shop Now",
@@ -1116,11 +1128,11 @@
           fFabric: "Fabric",
           fAbout: "About Us",
           aboutContent:
-            "Shabby Store is an Egyptian brand redefining streetwear, focusing on every detail for a unique identity.",
+            "WARSHAL Store is an Egyptian brand redefining streetwear, focusing on every detail for a unique identity.",
           fabricContent:
             "We use 100% Egyptian heavyweight cotton to ensure ultimate comfort and durability.",
           expContent:
-            "The Shabby experience is seamless, from browsing to premium-packaged fast delivery.",
+            "The WARSHAL experience is seamless, from browsing to premium-packaged fast delivery.",
           toastAdded: "Added to Bag!",
           bagEmpty: "Bag is Empty",
           welcome: "Welcome",
@@ -1628,15 +1640,65 @@
       window.toggleCartDrawer = () =>
         document.getElementById("cart-drawer").classList.toggle("active");
 
+      // --- UPDATED: Image Compression Logic ---
       document.getElementById("p-file").onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Create a FileReader
         const reader = new FileReader();
         reader.onload = (ev) => {
-          document.getElementById("p-base64").value = ev.target.result;
-          document.getElementById("upload-label").innerText = "IMAGE READY ✅";
-          document.getElementById("upload-label").classList.add("text-red-600");
-          document.getElementById("upload-icon").classList.add("text-red-600");
+          // Create an Image object
+          const img = new Image();
+          img.onload = () => {
+            // Create a Canvas
+            const canvas = document.createElement("canvas");
+            let width = img.width;
+            let height = img.height;
+
+            // Define Max Dimensions (e.g., 800px)
+            const MAX_WIDTH = 800;
+            const MAX_HEIGHT = 800;
+
+            // Resize Logic
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+
+            // Draw image on canvas
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+
+            // Export as JPEG with 0.7 quality (Good balance for web)
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.7);
+
+            // Set the compressed base64 to the hidden input
+            document.getElementById("p-base64").value = dataUrl;
+
+            // Update UI
+            document.getElementById("upload-label").innerText =
+              "IMAGE READY (COMPRESSED) ✅";
+            document
+              .getElementById("upload-label")
+              .classList.add("text-red-600");
+            document
+              .getElementById("upload-icon")
+              .classList.add("text-red-600");
+          };
+          img.src = ev.target.result;
         };
-        reader.readAsDataURL(e.target.files[0]);
+        reader.readAsDataURL(file);
       };
 
       document.getElementById("product-form").onsubmit = async (e) => {
